@@ -2,130 +2,53 @@ const express = require('express')
 const bodyParser = require('body-parser');
 const http = require('http');
 const Helpers = require('./utils/helpers.js')
+// Required for side-effects
+require("firebase/firestore");
 
-const port = 3000
+const admin = require('firebase-admin');
+const serviceAccount = require('../config/config.json');
 
-
-const pg = require('knex')({
-  client: 'pg',
-  version: '9.6',      
-  searchPath: ['knex', 'public'],
-  connection: process.env.PG_CONNECTION_STRING ? process.env.PG_CONNECTION_STRING : 'postgres://example:example@localhost:5432/test'
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
 });
+const db = admin.firestore();
+
+const port = 5000
+
+
 
 
 const app = express();
 http.Server(app); 
 
-
-app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    // to support URL-encoded bodies
-    extended: true
-  })
-);  
-
-app.get('/test', (req, res) => {
+app.get('/', (req, res) => {
   
+  res.status(200).send('hello world');
+});
+
+app.post('/postuser', async (req, res) => {
+  const user = req.body;
+
+  await db.collection('users').add({
+    firstname: "Jules",
+    lastname: "Docx",
+  })
+  .then((docRef) => {
+      console.log("Document written with ID: ", docRef.id);
+  })
+  .catch((error) => {
+      console.error("Error adding document: ", error);
+  });
+
   res.status(200).send();
-})
+});
 
-app.get('/', async (req, res) => {
-  const result = await pg
-    .select(['uuid', 'title', 'created_at'])
-    .from('story')
-  res.json({
-      res: result
-  })
-})
+let server = http.Server(app);
+server.listen(port, () => console.log(`API is running on localhost: ${port}`));
 
-app.get('/story/:uuid', async (req, res) => {
-  const result = await pg
-    .select(['uuid', 'title', 'created_at'])
-    .from('story')
-    .where({uuid: req.params.uuid})
-  res.json({
-      res: result
-  })
-})
+server.on('error', (error) => {
+  console.log('httpServer error', error);
+});
 
-/**     ///////////// GET ALL RECORD /////////////    */
-
-app.get('/storyblock', async (req, res) => {
-  const result = await pg.select(['uuid', 'content', 'story_id', 'created_at']).from('storyblock')
-  res.json({
-      res: result
-  })
-})
-
-/**     ///////////// GET RECORD BY UUID /////////////    */
-
-app.get('/storyblock/:uuid', async (req, res) => {
-
-// GET
-// record
-// met UUID
-
-})
-
-/**     ///////////// ADD RECORD /////////////    */
-
-app.post('/addstoryblock/', async (req, res) => {
-
-// ADD
-// record
-
-})
-
-/**     ///////////// DELETE RECORD /////////////    */
-app.delete('/storyblock/', async (req, res) => {
-
-// Delete
-// record
-// met UUID
-
-})
-
-async function initialiseTables() {
-  await pg.schema.hasTable('storyblock').then(async (exists) => {
-    if (!exists) {
-      await pg.schema
-        .createTable('storyblock', (table) => {
-          table.increments();
-          table.uuid('uuid');
-          table.string('content');
-          table.string('story_id');
-          table.integer('order');
-          table.timestamps(true, true);
-        })
-        .then(async () => {
-          console.log('created table storyblock');
-        });
-
-    }
-  });
-  await pg.schema.hasTable('story').then(async (exists) => {
-    if (!exists) {
-      await pg.schema
-        .createTable('story', (table) => {
-          table.increments();
-          table.uuid('uuid');
-          table.string('title');
-          table.string('summary');
-          table.timestamps(true, true);
-        })
-        .then(async () => {
-          console.log('created table story');
-          for (let i = 0; i < 10; i++) {
-            const uuid = Helpers.generateUUID();
-            await pg.table('story').insert({ uuid, title: `random element number ${i}` })
-          }
-        });
-        
-    }
-  });
-}
-initialiseTables()
 
 module.exports = app;

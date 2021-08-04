@@ -1,7 +1,7 @@
-## Cycling & Running logs / API
+# Cycling & Running logs / API
 This API is an open-source project for your clean and conventional sports insights. Besides that it is also a kickstarter for educational purposes.
 
-# How?
+### How?
 - 2 tables in a firebase database, 
     1. For a lists of your sport avtivities
     2. And a relational user / person (You)
@@ -11,7 +11,7 @@ This API is an open-source project for your clean and conventional sports insigh
 - CI & CD *Continuous Integration & Continuous Delivery*, for automated task conserning the deployment or development services
 
 - Docker, for streamlined project contribution process
-# Install guide
+### Install guide
 
 ```cmd
 cd api
