@@ -1,12 +1,13 @@
-FROM node:15.0.1-alpine3.10
+FROM node:latest
 
 WORKDIR /usr/app/api  
 
-COPY package*.json ./
+COPY package.json ./
 
 RUN npm install
 
-COPY . . 
+COPY . /usr/app/api  
+
+EXPOSE 5000
 
 CMD ["npm",  "start"]
-
