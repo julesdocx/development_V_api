@@ -16,8 +16,6 @@ const db = admin.firestore();
 const port = 5000
 
 
-
-
 const app = express();
 http.Server(app); 
 
