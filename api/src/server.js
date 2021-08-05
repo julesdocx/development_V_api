@@ -50,5 +50,4 @@ server.on('error', (error) => {
   console.log('httpServer error', error);
 });
 
-
 module.exports = app;

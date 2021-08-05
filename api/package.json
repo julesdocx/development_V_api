@@ -17,6 +17,10 @@
     "http": "0.0.1-security",
     "jest": "^26.6.3",
     "nodemon": "^2.0.6",
+    "supertest": "^6.1.4",
     "uuid": "^8.3.1"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
   }
 }
