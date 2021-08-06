@@ -36,7 +36,14 @@ const deleteUser = async (req, res) => {
 
 // get (all) users
 const getUsers = async (req, res) => {
-    res.status(200).send('All users ...');
+    try {
+        const docRef = db.collection('users')
+        const snapshot = await docRef.get()
+        res.status(200).send(snapshot.docs.map(doc => doc.data()));
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
 }
 
 module.exports = {
