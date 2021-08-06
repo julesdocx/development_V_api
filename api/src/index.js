@@ -7,9 +7,8 @@ const apiRoutes = require('./routes/api');
 const port = 5000
 
 const app = express();
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.json());
+ app.use(bodyParser.urlencoded({extended: true}));
 http.Server(app); 
 
 app.use(function (req, res, next) {
