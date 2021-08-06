@@ -14,7 +14,8 @@ const postUser = async (req, res) => {
               username: user.username,
               email: user.email,
             }, { merge: true });
-            res.status(200).send('successful registration');
+            console.log(docRef.id)
+            res.status(200).send('successful registration', docRef.id);
         }
     } catch (err) {
         console.log(err);
