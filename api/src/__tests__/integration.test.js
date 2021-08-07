@@ -7,27 +7,36 @@ describe("Performs GET Request: /api/users/get", () => {
         try {
             const response = await request.get("/api/users/get");
             expect(response.status).toBe(200);
-            console.log(response.body)
-            expect(response.body).not.toBeUndefined();
+            expect(response.body).toBeDefined();
             done();
-        } catch (error) {}
+        } catch (error) {
+            console.log(error)
+        }
     });
 });
 
 describe("Performs POST Request: /api/users/post, with a unique BODY.username, BODY.email and DELETES it afterwords", () => {
-    //let id;
-    it("Responds with status:200 and returns status:200", async (done) => {
+    let id;
+    it("Responds with textID and returns status:200", async (done) => {
         try {
             const response = await request.post("/api/users/post").send({user: {username: 'testPerson', email: 'test@email.com'}});            
-            console.log(response.body);
+            id = response.text;
+            expect(response.text).toBeDefined();
             expect(response.status).toBe(200);
             done();
-        } catch (error) {}
+        } catch (error) {
+            console.log(error)
+        }
     });
-    // it("Responds with status:200", async (done) => {
-    //     try {
-    //         const r
-    //     }
-    // });
+    it("Responds with textID and returns status:200", async (done) => {
+        try {
+            const response = await request.delete(`/api/users/delete/${id}`);            
+            expect(response.text).toBeDefined();
+            expect(response.status).toBe(200);
+            done();
+        } catch (error) {
+            console.log(error)
+        }
+    });
 });
 
