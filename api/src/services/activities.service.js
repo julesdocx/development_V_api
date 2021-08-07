@@ -5,16 +5,15 @@ const db = firebase.firestoreDb;
 const postActivity = async (req, res) => {
     const activity = req.body.activity;
     try {
-        await db.collection('activities').doc(activity.username).set({
+        const { id } = await db.collection('activities').add({
             title: activity.title,
             date: activity.date,
             sport: activity.sport,
             duration: activity.duration,
-            gpx: activity.gpx,
             username: activity.username,
-            uuid: activity.uuid,
         }, { merge: true });
-        res.status(200).send('successful post request');
+        db.collection('activities').doc(id).set({id: id})
+        res.status(200).send(id);
     } catch (err) {
         console.log(err);
         res.send(err);
@@ -22,24 +21,23 @@ const postActivity = async (req, res) => {
     res.status(200).send();
 }
 
-// update user with :uuid
+// update user with :id
 const updateActivity = async (req, res) => {
     const activity = req.body.activity;
     try {
         const docRef = db.collection('activities')
-        const snapshot = await docRef.where('uuid', '==', activity.uid).get();
+        const snapshot = await docRef.where('id', '==', activity.id).get();
         if (snapshot.empty) {
-            res.status(403).send(`The activity with title: ${activity.title} and uuid: ${activity.uuid}, doesn't exists`);
+            res.status(403).send(`The activity with title: ${activity.title} and uuid: ${activity.id}, doesn't exists`);
         } else {
-            docRef.set({
+            const {id} = docRef.set({
                 title: activity.title,
                 date: activity.date,
                 sport: activity.sport,
                 duration: activity.duration,
-                gpx: activity.gpx,
                 username: activity.username,
             });
-            res.status(200).send({message: 'successful update request', id: docRef.id});
+            res.status(200).send(id);
         }
     } catch (err) {
         console.log(err);

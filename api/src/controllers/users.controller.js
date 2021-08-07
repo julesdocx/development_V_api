@@ -4,22 +4,22 @@ const usersService = require('../services/users.service');
 
 /**
  * @param  {user}
+ * @return id
  */
 router.post('/post', (req, res) => {
     usersService.postUser(req, res);
 });
 
 /**
- * @returns [users]
+ * @return [users]
  */
 router.get('/get', (req, res) => {
     usersService.getUsers(req, res);
 });
 
 /**
- * ! not working
  * @param  :id
- * TODO usersService.deleteUser()
+ * @return id
  */
 router.delete('/delete/:id', (req, res) => {
     usersService.deleteUser(req, res); 
