@@ -24,8 +24,8 @@ router.get('/get', (req, res) => {
  * @param :id
  * @return [activities]
 */
-router.get('/get', (req, res) => {
-  activitiesService.getActivities(req, res);
+router.get('/get/:id', (req, res) => {
+  //TODO activitiesService.getActivityById(req, res);
 });
 
 /**

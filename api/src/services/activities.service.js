@@ -12,7 +12,7 @@ const postActivity = async (req, res) => {
             duration: activity.duration,
             username: activity.username,
         }, { merge: true });
-        db.collection('activities').doc(id).set({id: id})
+        db.collection('activities').doc(id).set({id: id}, { merge: true })
         res.status(200).send(id);
     } catch (err) {
         console.log(err);
