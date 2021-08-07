@@ -6,7 +6,6 @@ const usersService = require('../services/users.service');
  * @param  {user}
  */
 router.post('/post', (req, res) => {
-    console.log(req.body);
     usersService.postUser(req, res);
 });
 
@@ -22,7 +21,7 @@ router.get('/get', (req, res) => {
  * @param  :id
  * TODO usersService.deleteUser()
  */
-router.delete('/delete', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
     usersService.deleteUser(req, res); 
 });
 

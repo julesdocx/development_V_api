@@ -10,12 +10,11 @@ const postUser = async (req, res) => {
         if (!snapshot.empty) {
             res.status(403).send(`The username, ${user.username}, already exists`);
         } else {
-            docRef.add({
+            const {id} = await docRef.add({
               username: user.username,
               email: user.email,
             }, { merge: true });
-            console.log(docRef.id)
-            res.status(200).send('successful registration', docRef.id);
+            res.status(200).send(id);
         }
     } catch (err) {
         console.log(err);
@@ -31,7 +30,14 @@ const updateUser = async (req, res) => {
 
 // delete user with :uuid
 const deleteUser = async (req, res) => {
-    res.status(200).send('user deleted');
+    const reqId = req.params.id
+    try {
+        const {id} = await db.collection('users').doc(reqId).delete()
+        res.status(200).send(id);
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
 }
 
 // get (all) users
