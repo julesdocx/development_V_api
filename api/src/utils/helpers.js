@@ -11,6 +11,13 @@ const Helpers = {
     }
     return title
   },
+  // makeArrayOfQuery: async (snapshot) => {
+  //   let mappedArray = [];
+  //   await snapshot.forEach(doc => {
+  //     mappedArray.push({activity: doc.data()});
+  //   });
+  //   return mappedArray;
+  // }
 }
 
 module.exports = Helpers
