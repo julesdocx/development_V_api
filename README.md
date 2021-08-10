@@ -3,7 +3,7 @@ This API is an open-source project for your clean and conventional sports insigh
 
 ### How?
 - 2 tables in a firebase database, 
-    1. For a lists of your sport avtivities
+    1. For a lists of your sport activities
     2. And a relational user / person (You)
 
 - A lot of testing
