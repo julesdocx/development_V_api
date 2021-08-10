@@ -21,10 +21,10 @@ router.get('/get', (req, res) => {
 
 /**
  * ! not working
- * @param :id
+ * @param :username
  * @return [activities]
 */
-router.get('/get/:id', (req, res) => {
+router.get('/getbyusername/username', (req, res) => {
   //TODO activitiesService.getActivityById(req, res);
 });
 

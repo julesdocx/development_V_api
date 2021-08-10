@@ -1,7 +1,10 @@
 const firebase = require('../firebase');
 const db = firebase.firestoreDb;
 
-// post user with {user}:body
+/**
+ * @param  {activity}
+ * @return id
+ */
 const postActivity = async (req, res) => {
     const activity = req.body.activity;
     try {
@@ -21,7 +24,10 @@ const postActivity = async (req, res) => {
     res.status(200).send();
 }
 
-// update user with :id
+/**
+ * @param  {activity}
+ * @return id
+ */
 const updateActivity = async (req, res) => {
     const activity = req.body.activity;
     try {
@@ -48,7 +54,14 @@ const updateActivity = async (req, res) => {
 
 // delete user with :uuid
 const deleteActivity = async (req, res) => {
-
+    const reqId = req.params.id
+    try {
+        const {id} = await db.collection('activities').doc(reqId).delete();
+        res.status(200).send(id);
+    } catch (err) {
+        console.log(err)
+        res.send(err);
+    }
 }
 
 // get (all) users

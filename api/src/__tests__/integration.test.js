@@ -15,7 +15,7 @@ describe("Performs GET Request: /api/users/get", () => {
     });
 });
 
-describe("Performs POST Request: /api/users/post, with a unique BODY.username, BODY.email and DELETES it afterwords", () => {
+describe("Performs POST Request: /api/users/post, with a unique BODY.username, BODY.email and DELETES it afterwords (and checks wether every corresponding activity is deleted)", () => {
     let id;
     it("Responds with textID and returns status:200", async (done) => {
         try {
@@ -36,6 +36,13 @@ describe("Performs POST Request: /api/users/post, with a unique BODY.username, B
             done();
         } catch (error) {
             console.log(error)
+        }
+    });
+    it('should have deleted every corresponding activity of "testPerson"', (done) => {
+        try {
+            //const response = await request
+        } catch (error) {
+            //console.log(error)
         }
     });
 });

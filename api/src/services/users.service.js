@@ -2,7 +2,10 @@ const firebase = require('../firebase');
 const helpers = require('../utils/helpers');
 const db = firebase.firestoreDb;
 
-// post user with {user}:body
+/**
+ * @param  {user}
+ * @return id
+ */
 const postUser = async (req, res) => {
     const user = req.body.user;
     try {
@@ -23,13 +26,14 @@ const postUser = async (req, res) => {
     }
     res.status(200).send();
 }
-
-// update user with :uuid
+// TODO
 const updateUser = async (req, res) => {
     res.status(200).send('user updated');
 }
-
-// delete user with :id
+/**
+ * @param  :id
+ * @return id
+ */
 const deleteUser = async (req, res) => {
     const reqId = req.params.id
     try {
@@ -56,15 +60,17 @@ const deleteUserActivities = async (username) => {
         const snapshot = await collectionRef.where('username', '==', username).get().then( (querySnapshot) => {
             querySnapshot.forEach( (doc)=> {
                 doc.ref.delete();
-            })
-        })
+            });
+        });
     } catch (err) {
         console.log(err);
         return err;
     }
 }
 
-// get (all) users
+/**
+ * @return [user]
+ */
 const getUsers = async (req, res) => {
     try {
         const docRef = db.collection('users')
@@ -81,4 +87,5 @@ module.exports = {
     updateUser,
     deleteUser,
     getUsers,
+    deleteUserActivities,
 }
