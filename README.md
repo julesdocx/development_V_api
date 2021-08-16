@@ -15,7 +15,6 @@ This API is an open-source project for your clean and conventional sports insigh
 
 ```cmd
 cd api
-docker build -t storyline_api . 
-docker tag storyline_api:latest crshlab/storyline_api:0.1.0
-docker push crshlab/storyline_api:0.1.0
+docker compose build
+
 ```

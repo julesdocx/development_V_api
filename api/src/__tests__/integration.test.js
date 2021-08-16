@@ -38,12 +38,5 @@ describe("Performs POST Request: /api/users/post, with a unique BODY.username, B
             console.log(error)
         }
     });
-    it('should have deleted every corresponding activity of "testPerson"', (done) => {
-        try {
-            //const response = await request
-        } catch (error) {
-            //console.log(error)
-        }
-    });
 });
 

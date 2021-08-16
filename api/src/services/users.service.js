@@ -57,7 +57,7 @@ const deleteUserActivities = async (username) => {
     console.log(username);
     try {
         const collectionRef = db.collection('activities');
-        const snapshot = await collectionRef.where('username', '==', username).get().then( (querySnapshot) => {
+        collectionRef.where('username', '==', username).get().then( (querySnapshot) => {
             querySnapshot.forEach( (doc)=> {
                 doc.ref.delete();
             });

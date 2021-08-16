@@ -34,7 +34,7 @@ const updateActivity = async (req, res) => {
         const docRef = db.collection('activities')
         const snapshot = await docRef.where('id', '==', activity.id).get();
         if (snapshot.empty) {
-            res.status(403).send(`The activity with title: ${activity.title} and uuid: ${activity.id}, doesn't exists`);
+            res.status(403).send(`The activity with title: ${activity.title} and id: ${activity.id}, doesn't exists`);
         } else {
             const {id} = docRef.set({
                 title: activity.title,
@@ -52,7 +52,10 @@ const updateActivity = async (req, res) => {
     res.status(200).send();
 }
 
-// delete user with :uuid
+/**
+ * @param  id
+ * @return id
+ */
 const deleteActivity = async (req, res) => {
     const reqId = req.params.id
     try {
@@ -64,9 +67,18 @@ const deleteActivity = async (req, res) => {
     }
 }
 
-// get (all) users
+/**
+ * @return [{activities}]
+ */
 const getActivities = async (req, res) => {
-
+    try {
+        const docRef = db.collection('activities')
+        const snapshot = await docRef.get()
+        res.status(200).send(snapshot.docs.map(doc => doc.data()));
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
 }
 
 module.exports ={

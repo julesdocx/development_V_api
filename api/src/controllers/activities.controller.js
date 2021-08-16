@@ -4,7 +4,6 @@ const activitiesService = require('../services/activities.service');
 
 
 /**
- * ! not working
  * @param  {activity}
  * @return id
  */
@@ -13,23 +12,21 @@ router.post('/post', (req, res) => {
 });
 
 /**
- * @return [activities]
+ * @return [{activities}]
 */
 router.get('/get', (req, res) => {
   activitiesService.getActivities(req, res);
 });
 
 /**
- * ! not working
  * @param :username
  * @return [activities]
 */
-router.get('/getbyusername/username', (req, res) => {
-  //TODO activitiesService.getActivityById(req, res);
+router.get('/deletebyname/:username', (req, res) => {
+  activitiesService.deleteActivitiesByUsername(req, res);
 });
 
 /**
- * ! not working
  * @param  :id
  * @return id
 */
@@ -38,9 +35,8 @@ router.delete('/delete/:id', (req, res) => {
 });
 
 /**
- * ! not working
  * @param  {Activity}
- * TODO activitiesService.updateActivity()
+ * @return id
 */
 router.post('/update', (req, res) => {
   activitiesService.updateActivity(req, res);
